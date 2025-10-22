@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A curated collection of useful links and resources">
+    <title>LinkHub - Share and Discover Useful Links</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4bb543;
+            --danger-color: #dc3545;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: white;
+            margin-bottom: 2rem;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+            color: #555;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 7px 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 20px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+            background-color: #f5f5f5;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        .card-img.loading {
+            opacity: 0;
+        }
+
+        .card-img.loaded {
+            opacity: 1;
+        }
+
+        .image-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            color: #999;
+        }
+
+        .image-placeholder i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .image-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(67, 97, 238, 0.2);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Tags overlay on image hover */
+        .tags-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 15px;
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .image-container:hover .tags-overlay {
+            opacity: 1;
+        }
+
+        .tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+
+        .card-url {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            word-break: break-all;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .card-tag {
+            background: #f0f0f0;
+            color: #555;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .visit-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .visit-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .like-btn {
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .like-btn.liked {
+            color: var(--danger-color);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--primary-color);
+            grid-column: 1 / -1;
+        }
+
+        .loading i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            animation: spin 1.5s linear infinite;
+        }
+
+        footer {
+            background: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 2rem 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-link"></i>
+                    <span>LinkHub</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-plus"></i> Add Link</a></li>
+                        <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h1>Discover & Share Useful Resources</h1>
+            <p>A curated collection of helpful websites, tools, and resources shared by our community.</p>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search links...">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+        </section>
+
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="development">Development</button>
+            <button class="filter-btn" data-filter="design">Design</button>
+            <button class="filter-btn" data-filter="productivity">Productivity</button>
+            <button class="filter-btn" data-filter="learning">Learning</button>
+        </div>
+
+        <div id="link-container" class="grid">
+            <div class="loading">
+                <i class="fas fa-spinner"></i>
+                <p>Loading links...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <i class="fas fa-link"></i>
+                    <span>LinkHub</span>
+                </div>
+                <p>Share and discover the best resources on the web.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <p class="copyright">&copy; 2023 LinkHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM elements
+        const linkContainer = document.getElementById('link-container');
+        const searchInput = document.querySelector('.search-input');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        // Store all links and filtered links
+        let allLinks = [];
+        let filteredLinks = [];
+
+        // Load links from JSON file
+        async function loadLinks() {
+            try {
+                const response = await fetch('links.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load links');
+                }
+                allLinks = await response.json();
+                filteredLinks = [...allLinks];
+                displayLinks();
+            } catch (error) {
+                console.error('Error loading links:', error);
+                linkContainer.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Failed to load links</h3>
+            <p>Please check if the links.json file exists and is properly formatted.</p>
+          </div>
+        `;
+            }
+        }
+
+        // Display links in the grid
+        function displayLinks(linksToDisplay = filteredLinks) {
+            linkContainer.innerHTML = '';
+
+            if (linksToDisplay.length === 0) {
+                linkContainer.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-search"></i>
+            <h3>No links found</h3>
+            <p>Try adjusting your search or filter criteria</p>
+          </div>
+        `;
+                return;
+            }
+
+            linksToDisplay.forEach(link => {
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                // Extract domain from URL for display
+                const domain = new URL(link.url).hostname;
+
+                // Generate tags HTML
+                const tagsHTML = link.tags ? link.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : '';
+                const cardTagsHTML = link.tags ? link.tags.map(tag => `<span class="card-tag">${tag}</span>`).join('') : '';
+
+                card.innerHTML = `
+          <div class="image-container">
+            <div class="image-loading">
+              <div class="spinner"></div>
+            </div>
+            <div class="image-placeholder" style="display: none;">
+              <i class="fas fa-image"></i>
+              <span>Image not available</span>
+            </div>
+            <div class="tags-overlay">
+              ${tagsHTML}
+            </div>
+            <img src="${link.image}" alt="${link.title}" class="card-img loading">
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">${link.title}</h3>
+            <p class="card-url">${domain}</p>
+            ${cardTagsHTML ? `<div class="card-tags">${cardTagsHTML}</div>` : ''}
+            <div class="card-actions">
+              <a href="${link.url}" target="_blank" class="visit-btn">Visit Site</a>
+              <button class="like-btn"><i class="far fa-heart"></i></button>
+            </div>
+          </div>
+        `;
+
+                // Add image loading functionality
+                const img = card.querySelector('.card-img');
+                const loadingSpinner = card.querySelector('.image-loading');
+                const placeholder = card.querySelector('.image-placeholder');
+
+                img.addEventListener('load', function () {
+                    this.classList.remove('loading');
+                    this.classList.add('loaded');
+                    loadingSpinner.style.display = 'none';
+                });
+
+                img.addEventListener('error', function () {
+                    loadingSpinner.style.display = 'none';
+                    placeholder.style.display = 'flex';
+                    this.style.display = 'none';
+                });
+
+                // Add like functionality
+                const likeBtn = card.querySelector('.like-btn');
+                likeBtn.addEventListener('click', function () {
+                    this.classList.toggle('liked');
+                    this.querySelector('i').classList.toggle('far');
+                    this.querySelector('i').classList.toggle('fas');
+                });
+
+                linkContainer.appendChild(card);
+            });
+        }
+
+        // Search functionality
+        searchInput.addEventListener('input', function () {
+            const searchTerm = this.value.toLowerCase();
+            filteredLinks = allLinks.filter(link =>
+                link.title.toLowerCase().includes(searchTerm) ||
+                link.url.toLowerCase().includes(searchTerm) ||
+                (link.tags && link.tags.some(tag => tag.toLowerCase().includes(searchTerm)))
+            );
+            displayLinks();
+        });
+
+        // Filter functionality
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                const filter = this.dataset.filter;
+                if (filter === 'all') {
+                    filteredLinks = [...allLinks];
+                } else {
+                    filteredLinks = allLinks.filter(link =>
+                        link.category && link.category.toLowerCase() === filter
+                    );
+                }
+                displayLinks();
+            });
+        });
+
+        // Initialize the page
+        loadLinks();
+    </script>
+</body>
+
+</html>
